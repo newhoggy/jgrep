@@ -91,7 +91,7 @@ executable jgrep
   hs-source-dirs:       app
   ghc-options:          -threaded -rtsopts -with-rtsopts=-N
   other-modules:        App.Commands
-                        App.Commands.Demo
+                        App.Commands.Query
 
 test-suite jgrep-test
   import:               base, config

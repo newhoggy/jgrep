@@ -1,6 +1,6 @@
 module App.Commands where
 
-import App.Commands.Demo
+import App.Commands.Query
 import Options.Applicative
 
 {- HLINT ignore "Monoid law, left identity" -}
@@ -11,4 +11,4 @@ commands = commandsGeneral
 commandsGeneral :: Parser (IO ())
 commandsGeneral = subparser $ mempty
   <>  commandGroup "Commands:"
-  <>  cmdDemo
+  <>  cmdQuery

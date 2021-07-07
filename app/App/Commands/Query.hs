@@ -4,19 +4,19 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeApplications    #-}
 
-module App.Commands.Demo
-  ( cmdDemo
+module App.Commands.Query
+  ( cmdQuery
   ) where
 
 import Options.Applicative                                hiding (columns)
 
 {- HLINT ignore "Reduce duplication" -}
 
-runDemo :: () -> IO ()
-runDemo _opts = return ()
+runQuery :: () -> IO ()
+runQuery _opts = return ()
 
-optsDemo :: Parser ()
-optsDemo = pure ()
+optsQuery :: Parser ()
+optsQuery = pure ()
 
-cmdDemo :: Mod CommandFields (IO ())
-cmdDemo = command "demo"  $ flip info idm $ runDemo <$> optsDemo
+cmdQuery :: Mod CommandFields (IO ())
+cmdQuery = command "query"  $ flip info idm $ runQuery <$> optsQuery
