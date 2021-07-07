@@ -1,0 +1,3 @@
+module JGrep.Core
+  (
+  ) where
