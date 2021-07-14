@@ -13,18 +13,13 @@ maintainer:             newhoggy@gmail.com
 copyright:              2016-2021 John Ky
 license:                BSD-3-Clause
 license-file:           LICENSE
-tested-with:            GHC == 9.0.1, GHC == 8.10.4, GHC == 8.8.4, GHC == 8.6.5
+tested-with:            GHC == 8.10.4
 build-type:             Simple
 extra-source-files:     README.md
 
 source-repository head
   type:                 git
   location:             https://github.com/haskell-works/jgrep
-
-flag bounds-checking-enabled
-  description:          Enable bmi2 instruction set
-  manual:               False
-  default:              False
 
 common base                       { build-depends: base                       >= 4.11       && < 5      }
 
@@ -42,6 +37,7 @@ common hedgehog                   { build-depends: hedgehog                   >=
 common hspec                      { build-depends: hspec                      >= 2.4        && < 2.8    }
 common hw-hspec-hedgehog          { build-depends: hw-hspec-hedgehog          >= 0.1        && < 0.2    }
 common lens                       { build-depends: lens                       >= 5.0.1      && < 6      }
+common lens-aeson                 { build-depends: lens-aeson                 >= 1.1.1      && < 1.2    }
 common mmap                       { build-depends: mmap                       >= 0.5        && < 0.6    }
 common optparse-applicative       { build-depends: optparse-applicative       >= 0.16.1.0   && < 0.17   }
 common semigroups                 { build-depends: semigroups                 >= 0.8.4      && < 0.20   }
@@ -50,6 +46,7 @@ common transformers               { build-depends: transformers               >=
 common unliftio-core              { build-depends: unliftio-core              >= 0.1.2.0    && < 0.3    }
 common unordered-containers       { build-depends: unordered-containers       >= 0.2.14.0   && < 0.3    }
 common vector                     { build-depends: vector                     >= 0.12       && < 0.13   }
+common yaml                       { build-depends: yaml                       >= 0.11.5.0   && < 0.12   }
 
 common jgrep
   build-depends:        jgrep
@@ -57,19 +54,27 @@ common jgrep
 common config
   default-language:     Haskell2010
   ghc-options:          -Wall -O2 -msse4.2
-  if flag(bounds-checking-enabled)
-    cpp-options:        -DBOUNDS_CHECKING_ENABLED
 
 library
   import:               base, config
+                      , aeson
                       , bytestring
                       , deepseq
+                      , generic-lens
                       , ghc-prim
+                      , lens
                       , mmap
+                      , text
                       , transformers
                       , unliftio-core
+                      , unordered-containers
                       , vector
-  exposed-modules:      JGrep.Core
+                      , yaml
+  exposed-modules:      JGrep.Database
+                        JGrep.Errors
+                        JGrep.Query
+                        JGrep.Schema
+                        JGrep.Type
   other-modules:        Paths_jgrep
   autogen-modules:      Paths_jgrep
   hs-source-dirs:       src
@@ -81,13 +86,19 @@ executable jgrep
                       , bytestring
                       , dlist
                       , generic-lens
+                      , jgrep
                       , lens
                       , mmap
                       , optparse-applicative
                       , text
+                      , transformers
                       , unordered-containers
                       , vector
+                      , yaml
   main-is:              Main.hs
+  other-modules:        App.Commands
+                        App.Commands.Query
+                        App.Commands.Types
   hs-source-dirs:       app
   ghc-options:          -threaded -rtsopts -with-rtsopts=-N
   other-modules:        App.Commands
@@ -95,6 +106,7 @@ executable jgrep
 
 test-suite jgrep-test
   import:               base, config
+                      , aeson
                       , bytestring
                       , directory
                       , exceptions
@@ -102,9 +114,12 @@ test-suite jgrep-test
                       , hspec
                       , hw-hspec-hedgehog
                       , jgrep
+                      , lens
+                      , lens-aeson
                       , mmap
                       , transformers
                       , vector
+                      , yaml
   type:                 exitcode-stdio-1.0
   main-is:              Spec.hs
   other-modules:        JGrep.CoreSpec

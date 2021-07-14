@@ -1,0 +1,149 @@
+types:
+- name: organizations
+  file: data/organizations.json
+  primary_key: id
+  fields:
+    - name: id
+      key: _id
+
+    - name: url
+      key: url
+
+    - name: external_id
+      key: external_id
+
+    - name: name
+      key: name
+
+    - name: domain_names
+      key: domain_names
+      multiple: true
+
+    - name: created_at
+      key: created_at
+
+    - name: details
+      key: details
+
+    - name: shared_tickets
+      key: shared_tickets
+
+    - name: tags
+      key: tags
+      multiple: true
+
+- name: tickets
+  file: data/tickets.json
+  fields:
+    - name: id
+      key: _id
+
+    - name: url
+      key: url
+
+    - name: external_id
+      key: external_id
+
+    - name: created_at
+      key: created_at
+
+    - name: type
+      key: type
+
+    - name: subject
+      key: subject
+
+    - name: description
+      key: description
+
+    - name: priority
+      key: priority
+
+    - name: status
+      key: status
+
+    - name: submitter_id
+      key: submitter_id
+
+    - name: assignee_id
+      key: assignee_id
+
+    - name: organization_id
+      key: organization_id
+
+    - name: tags
+      key: tags
+      multiple: true
+
+    - name: has_incidents
+      key: has_incidents
+
+    - name: due_at
+      key: due_at
+
+    - name: via
+      key: via
+
+- name: users
+  file: data/users.json
+  fields:
+    - name: id
+      key: _id
+
+    - name: url
+      key: url
+
+    - name: external_id
+      key: external_id
+
+    - name: name
+      key: name
+
+    - name: alias
+      key: alias
+
+    - name: created_at
+      key: created_at
+
+    - name: active
+      key: active
+
+    - name: verified
+      key: verified
+
+    - name: shared
+      key: shared
+
+    - name: locale
+      key: locale
+
+    - name: timezone
+      key: timezone
+
+    - name: last_login_at
+      key: last_login_at
+
+    - name: email
+      key: email
+
+    - name: phone
+      key: phone
+
+    - name: signature
+      key: signature
+
+    - name: organization_id
+      key: organization_id
+
+    - name: tags
+      key: tags
+      multiple: true
+
+    - name: suspended
+      key: suspended
+
+    - name: role
+      key: role
+
+    - name: _id
+      key: _id
